@@ -93,13 +93,31 @@
     }
     
     //////////////////////////////////////////////////////////////////////////////////////
-    // NSSet - fastest access when we don't need ordering or dictionary lookups, constant
+    // NSSet/NSMutableSet - fastest access when we don't need ordering or dictionary lookups, constant
     //////////////////////////////////////////////////////////////////////////////////////
     
-    //NSSet *mySet = [NSSet setWithObjects:@"Curt", @"Tim", @"Drew", @"Jesse", nil];
+    // setup some test objects
+    NSString *employee1 = @"Bob";
+    NSString *employee2 = @"James";
+    NSString *employee3 = @"Ted";
+    
+    // create two sets
+    NSSet *overtimeBonusSet = [NSSet setWithObjects:employee1, employee2, employee1, nil];
+    NSSet *onTimeBonusSet = [NSSet setWithObjects:employee2, nil];
+    
+    // and see if there is a common member (intersection)
+    BOOL employeeOfTheYearCandiateExists = [overtimeBonusSet intersectsSet:onTimeBonusSet];
+    
+    // log result
+    NSLog(employeeOfTheYearCandiateExists ? @"Yes, there is a candidate for Employee of the Year" : @"No, there is not a candidate for Employee of the Year");
+    
+    // unfortunately, NSSet doesn't appear to have a way to get the actual intersecting object(s)
+    
+
     
     
-    // todo: work out NSSet, NSMutableSet, NSCountedSet
+    
+    // todo: work out NSMutableSet, NSCountedSet
     
     return YES;
 }
