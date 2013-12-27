@@ -93,7 +93,7 @@
     }
     
     //////////////////////////////////////////////////////////////////////////////////////
-    // NSSet/NSMutableSet - fastest access when we don't need ordering or dictionary lookups, constant
+    // NSSet - fastest access when we don't need ordering or dictionary lookups, constant
     //////////////////////////////////////////////////////////////////////////////////////
     
     // setup some test objects
@@ -102,7 +102,7 @@
     NSString *employee3 = @"Ted";
     
     // create two sets
-    NSSet *overtimeBonusSet = [NSSet setWithObjects:employee1, employee2, employee1, nil];
+    NSSet *overtimeBonusSet = [NSSet setWithObjects:employee1, employee2, employee3, nil];
     NSSet *onTimeBonusSet = [NSSet setWithObjects:employee2, nil];
     
     // and see if there is a common member (intersection)
@@ -114,10 +114,44 @@
     // unfortunately, NSSet doesn't appear to have a way to get the actual intersecting object(s)
     
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // NSMutableSet - fastest access when we don't need ordering or dictionary lookups, can add/replace/remove objects
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
+    NSMutableSet *myMutableSet = [NSMutableSet new];
     
+    // add some objects
+    [myMutableSet addObject:@"a"];
+    [myMutableSet addObject:@"b"];
+    [myMutableSet addObject:@"c"];
     
-    // todo: work out NSMutableSet, NSCountedSet
+    // remove one
+    [myMutableSet removeObject: @"b"];
+    
+    // iterate over the mutable set
+    for (id object in myMutableSet) {
+        NSLog(@"object in set=%@ ", object);
+    }
+    
+    // is something in the set?
+    BOOL inSet = [myMutableSet containsObject:@"c"];
+    
+    NSLog(inSet ? @"Yes, the object is in the set." : @"No, the object is not in the set");
+    
+    /////////////////////////////////////////////////////////////////////////
+    // NSCountedSet - counts the number of distinct objects added to the set
+    /////////////////////////////////////////////////////////////////////////
+    
+    NSCountedSet *myCountedSet = [NSCountedSet new];
+    [myCountedSet addObject:@"one"];
+    [myCountedSet addObject:@"two"];
+    [myCountedSet addObject:@"two"];
+    
+    int countOfOne = [myCountedSet countForObject:@"one"];
+    int countOfTwo = [myCountedSet countForObject:@"two"];
+    
+    NSLog(@"countOfOne=%d, countOfTwo=%d", countOfOne, countOfTwo);
+    
     
     return YES;
 }
